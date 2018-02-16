@@ -1,8 +1,8 @@
 //
-//  CDVCrypt.m
+//  
 //  CordovaLib
 //
-//  Created by tkyaji on 2015/07/17.
+//  
 //
 //
 
