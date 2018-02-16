@@ -13,10 +13,10 @@ module.exports = function(context) {
     var deferral = new Q.defer();
     var projectRoot = cordova_util.cdProjectRoot();
 
-    var key = crypto.randomBytes(24).toString('base64');
-    var iv = crypto.randomBytes(12).toString('base64');
+    var a = crypto.randomBytes(24).toString('base64');
+    var a5 = crypto.randomBytes(12).toString('base64');
 
-    console.log('key=' + key + ', iv=' + iv)
+    console.log('a=' + a + ', a5=' + a5)
 
     var targetFiles = loadCryptFileTargets();
 
@@ -34,7 +34,7 @@ module.exports = function(context) {
             return isCryptFile(file.replace(wwwDir, ''));
         }).forEach(function(file) {
             var content = fs.readFileSync(file, 'utf-8');
-            fs.writeFileSync(file, encryptData(content, key, iv), 'utf-8');
+            fs.writeFileSync(file, encryptData(content, a, a5), 'utf-8');
             console.log('encrypt: ' + file);
         });
 
@@ -54,13 +54,13 @@ module.exports = function(context) {
 
               pluginDir = path.join(cordovaproj, 'Plugins', context.opts.plugin.id);
             }
-            replaceCryptKey_ios(pluginDir, key, iv);
+            replaceCryptKey_ios(pluginDir, a, a5);
 
             */
 
         } else if (platform == 'android') {
             var pluginDir = path.join(platformPath, 'src');
-            replaceCryptKey_android(pluginDir, key, iv);
+            replaceCryptKey_android(pluginDir, a, a5);
 
             var cfg = new ConfigParser(platformInfo.projectConfig.path);
             cfg.doc.getroot().getchildren().filter(function(child, idx, arr) {
@@ -132,22 +132,22 @@ module.exports = function(context) {
         return true;
     }
 
-    function encryptData(input, key, iv) {
-        var cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    function encryptData(input, a, a5) {
+        var cipher = crypto.createCipheriv('aes-256-cbc', a, a5);
         var encrypted = cipher.update(input, 'utf8', 'base64') + cipher.final('base64');
 
         return encrypted;
     }
 
-    function replaceCryptKey_ios(pluginDir, key, iv) {
+    function replaceCryptKey_ios(pluginDir, a, a5) {
         var sourceFile = path.join(pluginDir, 'CDVCryptURLProtocol.m');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
         var includeArrStr = targetFiles.include.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
         var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
-        content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + key + '";')
-                         .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";')
+        content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + a + '";')
+                         .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + a5 + '";')
                          .replace(/kIncludeFiles\[\] = {.*};/, 'kIncludeFiles\[\] = { ' + includeArrStr + ' };')
                          .replace(/kExcludeFiles\[\] = {.*};/, 'kExcludeFiles\[\] = { ' + excludeArrStr + ' };')
                          .replace(/kIncludeFileLength = [0-9]+;/, 'kIncludeFileLength = ' + targetFiles.include.length + ';')
@@ -156,15 +156,15 @@ module.exports = function(context) {
         fs.writeFileSync(sourceFile, content, 'utf-8');
     }
 
-    function replaceCryptKey_android(pluginDir, key, iv) {
+    function replaceCryptKey_android(pluginDir, a, a5) {
         var sourceFile = path.join(pluginDir, 'com/tkyaji/cordova/DecryptResource.java');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
         var includeArrStr = targetFiles.include.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
         var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
-        content = content.replace(/CRYPT_KEY = ".*";/, 'CRYPT_KEY = "' + key + '";')
-                         .replace(/CRYPT_IV = ".*";/, 'CRYPT_IV = "' + iv + '";')
+        content = content.replace(/CRYPT_KEY = ".*";/, 'CRYPT_KEY = "' + a + '";')
+                         .replace(/CRYPT_IV = ".*";/, 'CRYPT_IV = "' + a5 + '";')
                          .replace(/INCLUDE_FILES = new String\[\] {.*};/, 'INCLUDE_FILES = new String[] { ' + includeArrStr + ' };')
                          .replace(/EXCLUDE_FILES = new String\[\] {.*};/, 'EXCLUDE_FILES = new String[] { ' + excludeArrStr + ' };');
 
