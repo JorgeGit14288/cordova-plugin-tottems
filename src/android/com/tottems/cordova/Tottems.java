@@ -1,4 +1,4 @@
-package com.tkyaji.cordova;
+package com.tottems.cordova;
 
 import android.net.Uri;
 import android.util.Base64;
@@ -20,27 +20,27 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
-public class DecryptResource extends CordovaPlugin {
+public class TottemsResource extends CordovaPlugin {
 
-    private static final String TAG = "DecryptResource";
+    private static final String TAG = "TottemsResource";
 
-    private static final String CRYPT_KEY = "";
-    private static final String CRYPT_IV = "";
-    private static final String[] INCLUDE_FILES = new String[] { };
-    private static final String[] EXCLUDE_FILES = new String[] { };
+    private static final String a = "";
+    private static final String a5 = "";
+    private static final String[] ifs = new String[] { };
+    private static final String[] efs = new String[] { };
 
     @Override
-    public Uri remapUri(Uri uri) {
-        if (uri.toString().indexOf("/+++/") > -1) {
-            return this.toPluginUri(uri);
+    public Uri remapUri(Uri u) {
+        if (u.toString().indexOf("/+++/") > -1) {
+            return this.toPluginUri(u);
         } else {
-            return uri;
+            return u;
         }
     }
 
     @Override
-    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri uri) throws IOException {
-        Uri oriUri = this.fromPluginUri(uri);
+    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri u) throws IOException {
+        Uri oriUri = this.fromPluginUri(u);
         String uriStr = oriUri.toString().replace("/+++/", "/").split("\\?")[0];
 
         CordovaResourceApi.OpenForReadResult readResult =  this.webView.getResourceApi().openForRead(Uri.parse(uriStr), true);
@@ -59,12 +59,12 @@ public class DecryptResource extends CordovaPlugin {
 
         byte[] bytes = Base64.decode(strb.toString(), Base64.DEFAULT);
 
-        LOG.d(TAG, "decrypt: " + uriStr);
+        LOG.d(TAG, "tottems: " + uriStr);
         ByteArrayInputStream byteInputStream = null;
         try {
-            SecretKey skey = new SecretKeySpec(CRYPT_KEY.getBytes("UTF-8"), "AES");
+            SecretKey skey = new SecretKeySpec(a.getBytes("UTF-8"), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, skey, new IvParameterSpec(CRYPT_IV.getBytes("UTF-8")));
+            cipher.init(Cipher.DECRYPT_MODE, skey, new IvParameterSpec(a5.getBytes("UTF-8")));
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bos.write(cipher.doFinal(bytes));
@@ -78,12 +78,12 @@ public class DecryptResource extends CordovaPlugin {
                 readResult.uri, byteInputStream, readResult.mimeType, readResult.length, readResult.assetFd);
     }
 
-    private boolean isCryptFiles(String uri) {
-        String checkPath = uri.replace("file:///android_asset/www/", "");
-        if (!this.hasMatch(checkPath, INCLUDE_FILES)) {
+    private boolean isCryptFiles(String u) {
+        String checkPath = u.replace("file:///android_asset/www/", "");
+        if (!this.hasMatch(checkPath, ifs)) {
             return false;
         }
-        if (this.hasMatch(checkPath, EXCLUDE_FILES)) {
+        if (this.hasMatch(checkPath, efs)) {
             return false;
         }
         return true;

@@ -1,12 +1,14 @@
 {
-  "name": "cordova-plugin-template",
+  "name": "cordova-plugin-tottems",
   "version": "1.0.0",
-  "cordova": {
-    "id": "cordova-plugin-template",
-    "platforms": [
-      "android",
-      "ios"
-    ]
+  "description": "myFirstPlugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JorgeGit14288/cordova-plugin-tottems.git"
   },
-  "description": "A starting point for a Cordova Plugin"
+  "keywords": [
+    "cordova-android"
+  ],
+  "author": "JFUENTES",
+  "license": "UNLICENSED"
 }
