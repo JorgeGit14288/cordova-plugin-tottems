@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-tottems",
-  "version": "1.0.0",
-  "description": "myFirstPlugin",
+  "version": "1.0.1",
+  "description": "Arreglando bugs de referencias",
   "repository": {
     "type": "git",
     "url": "https://github.com/JorgeGit14288/cordova-plugin-tottems.git"
