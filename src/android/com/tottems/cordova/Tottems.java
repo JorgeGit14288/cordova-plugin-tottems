@@ -45,7 +45,7 @@ public class TottemsResource extends CordovaPlugin {
 
         CordovaResourceApi.OpenForReadResult readResult =  this.webView.getResourceApi().openForRead(Uri.parse(uriStr), true);
 
-        if (!isCryptFiles(uriStr)) {
+        if (!isCFiles(uriStr)) {
             return readResult;
         }
 
@@ -78,7 +78,7 @@ public class TottemsResource extends CordovaPlugin {
                 readResult.uri, byteInputStream, readResult.mimeType, readResult.length, readResult.assetFd);
     }
 
-    private boolean isCryptFiles(String u) {
+    private boolean isCFiles(String u) {
         String checkPath = u.replace("file:///android_asset/www/", "");
         if (!this.hasMatch(checkPath, ifs)) {
             return false;

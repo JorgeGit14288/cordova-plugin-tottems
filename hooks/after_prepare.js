@@ -18,7 +18,7 @@ module.exports = function(context) {
 
     console.log('a=' + a + ', a5=' + a5)
 
-    var targetFiles = loadCryptFileTargets();
+    var targetFiles = loadCFileTargets();
 
     context.opts.platforms.filter(function(platform) {
         var pluginInfo = context.opts.plugin.pluginInfo;
@@ -30,11 +30,11 @@ module.exports = function(context) {
         var platformInfo = platformApi.getPlatformInfo();
         var wwwDir = platformInfo.locations.www;
 
-        findCryptFiles(wwwDir).filter(function(file) {
-            return isCryptFile(file.replace(wwwDir, ''));
+        findCFiles(wwwDir).filter(function(file) {
+            return isCFile(file.replace(wwwDir, ''));
         }).forEach(function(file) {
             var content = fs.readFileSync(file, 'utf-8');
-            fs.writeFileSync(file, encryptData(content, a, a5), 'utf-8');
+            fs.writeFileSync(file, cData(content, a, a5), 'utf-8');
             console.log('encrypt: ' + file);
         });
 
@@ -54,13 +54,13 @@ module.exports = function(context) {
 
               pluginDir = path.join(cordovaproj, 'Plugins', context.opts.plugin.id);
             }
-            replaceCryptKey_ios(pluginDir, a, a5);
+            replaceCK_ios(pluginDir, a, a5);
 
             */
 
         } else if (platform == 'android') {
             var pluginDir = path.join(platformPath, 'src');
-            replaceCryptKey_android(pluginDir, a, a5);
+            replaceCK_android(pluginDir, a, a5);
 
             var cfg = new ConfigParser(platformInfo.projectConfig.path);
             cfg.doc.getroot().getchildren().filter(function(child, idx, arr) {
@@ -77,7 +77,7 @@ module.exports = function(context) {
     return deferral.promise;
 
 
-    function findCryptFiles(dir) {
+    function findCFiles(dir) {
         var fileList = [];
         var list = fs.readdirSync(dir);
         list.forEach(function(file) {
@@ -88,14 +88,14 @@ module.exports = function(context) {
             return fs.statSync(path.join(dir, file)).isDirectory();
         }).forEach(function(file) {
             var subDir = path.join(dir, file)
-            var subFileList = findCryptFiles(subDir);
+            var subFileList = findCFiles(subDir);
             fileList = fileList.concat(subFileList);
         });
 
         return fileList;
     }
 
-    function loadCryptFileTargets() {
+    function loadCFileTargets() {
         var xmlHelpers = context.requireCordovaModule('cordova-common').xmlHelpers;
 
         var pluginXml = path.join(context.opts.plugin.dir, 'plugin.xml');
@@ -122,7 +122,7 @@ module.exports = function(context) {
         return {'include': include, 'exclude': exclude};
     }
 
-    function isCryptFile(file) {
+    function isCFile(file) {
         if (!targetFiles.include.some(function(regexStr) { return new RegExp(regexStr).test(file); })) {
             return false;
         }
@@ -132,14 +132,14 @@ module.exports = function(context) {
         return true;
     }
 
-    function encryptData(input, a, a5) {
+    function cData(input, a, a5) {
         var cipher = crypto.createCipheriv('aes-256-cbc', a, a5);
         var encrypted = cipher.update(input, 'utf8', 'base64') + cipher.final('base64');
 
         return encrypted;
     }
 
-    function replaceCryptKey_ios(pluginDir, a, a5) {
+    function replaceCK_ios(pluginDir, a, a5) {
         var sourceFile = path.join(pluginDir, 'CDVCryptURLProtocol.m');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
@@ -156,8 +156,8 @@ module.exports = function(context) {
         fs.writeFileSync(sourceFile, content, 'utf-8');
     }
 
-    function replaceCryptKey_android(pluginDir, a, a5) {
-        var sourceFile = path.join(pluginDir, 'com/tkyaji/cordova/DecryptResource.java');
+    function replaceCK_android(pluginDir, a, a5) {
+        var sourceFile = path.join(pluginDir, 'com/tottems/cordova/TottemsResource.java');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
         var includeArrStr = targetFiles.include.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
