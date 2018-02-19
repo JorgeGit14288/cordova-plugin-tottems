@@ -25,7 +25,12 @@ public class TottemsResource extends CordovaPlugin {
     private static final String TAG = "TottemsResource";
 
     private static final String a = "";
+    private static final String a2 = "";
+    private static final String a3= "";
+    private static final String a4 = "";
+    
     private static final String a5 = "";
+    private static final String a6 = "";
     private static final String[] ifs = new String[] { };
     private static final String[] efs = new String[] { };
 
@@ -45,7 +50,7 @@ public class TottemsResource extends CordovaPlugin {
 
         CordovaResourceApi.OpenForReadResult readResult =  this.webView.getResourceApi().openForRead(Uri.parse(uriStr), true);
 
-        if (!isCryptFiles(uriStr)) {
+        if (!isCFiles(uriStr)) {
             return readResult;
         }
 
@@ -59,12 +64,15 @@ public class TottemsResource extends CordovaPlugin {
 
         byte[] bytes = Base64.decode(strb.toString(), Base64.DEFAULT);
 
-        LOG.d(TAG, "decrypt: " + uriStr);
+        LOG.d(TAG, "dc: " + uriStr);
         ByteArrayInputStream byteInputStream = null;
         try {
-            SecretKey skey = new SecretKeySpec(a.getBytes("UTF-8"), "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, skey, new IvParameterSpec(a5.getBytes("UTF-8")));
+            SecretKey sy = new SecretKeySpec(a.getBytes("UTF-8"), "AES");
+            SecretKey sy2 = new SecretKeySpec(a2.getBytes("UTF-8"), "AES");
+            SecretKey sy3= new SecretKeySpec(a3.getBytes("UTF-8"), "AES");
+            SecretKey sy4 = new SecretKeySpec(a4.getBytes("UTF-8"), "AES");
+            Cipher cr = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cr.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(a5.getBytes("UTF-8")));
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bos.write(cipher.doFinal(bytes));
@@ -78,7 +86,7 @@ public class TottemsResource extends CordovaPlugin {
                 readResult.uri, byteInputStream, readResult.mimeType, readResult.length, readResult.assetFd);
     }
 
-    private boolean isCryptFiles(String uri) {
+    private boolean isCFiles(String uri) {
         String checkPath = uri.replace("file:///android_asset/www/", "");
         if (!this.hasMatch(checkPath, ifs)) {
             return false;
