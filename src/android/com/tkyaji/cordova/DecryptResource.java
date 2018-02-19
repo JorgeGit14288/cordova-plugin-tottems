@@ -1,4 +1,4 @@
-package com.tottems.cordova;
+package com.tkyaji.cordova;
 
 import android.net.Uri;
 import android.util.Base64;
@@ -20,9 +20,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
-public class TottemsResource extends CordovaPlugin {
+public class DecryptResource extends CordovaPlugin {
 
-    private static final String TAG = "TottemsResource";
+    private static final String TAG = "DecryptResource";
 
     private static final String a = "";
     private static final String a5 = "";
@@ -30,22 +30,22 @@ public class TottemsResource extends CordovaPlugin {
     private static final String[] efs = new String[] { };
 
     @Override
-    public Uri remapUri(Uri u) {
-        if (u.toString().indexOf("/+++/") > -1) {
-            return this.toPluginUri(u);
+    public Uri remapUri(Uri uri) {
+        if (uri.toString().indexOf("/+++/") > -1) {
+            return this.toPluginUri(uri);
         } else {
-            return u;
+            return uri;
         }
     }
 
     @Override
-    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri u) throws IOException {
-        Uri oriUri = this.fromPluginUri(u);
+    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri uri) throws IOException {
+        Uri oriUri = this.fromPluginUri(uri);
         String uriStr = oriUri.toString().replace("/+++/", "/").split("\\?")[0];
 
         CordovaResourceApi.OpenForReadResult readResult =  this.webView.getResourceApi().openForRead(Uri.parse(uriStr), true);
 
-        if (!isCFiles(uriStr)) {
+        if (!isCryptFiles(uriStr)) {
             return readResult;
         }
 
@@ -59,7 +59,7 @@ public class TottemsResource extends CordovaPlugin {
 
         byte[] bytes = Base64.decode(strb.toString(), Base64.DEFAULT);
 
-        LOG.d(TAG, "tottems: " + uriStr);
+        LOG.d(TAG, "decrypt: " + uriStr);
         ByteArrayInputStream byteInputStream = null;
         try {
             SecretKey skey = new SecretKeySpec(a.getBytes("UTF-8"), "AES");
@@ -78,8 +78,8 @@ public class TottemsResource extends CordovaPlugin {
                 readResult.uri, byteInputStream, readResult.mimeType, readResult.length, readResult.assetFd);
     }
 
-    private boolean isCFiles(String u) {
-        String checkPath = u.replace("file:///android_asset/www/", "");
+    private boolean isCryptFiles(String uri) {
+        String checkPath = uri.replace("file:///android_asset/www/", "");
         if (!this.hasMatch(checkPath, ifs)) {
             return false;
         }
