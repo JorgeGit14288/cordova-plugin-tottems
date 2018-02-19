@@ -25,9 +25,10 @@ public class TottemsResource extends CordovaPlugin {
     private static final String TAG = "TottemsResource";
 
     private static final String a = "";
-    private static final String a2 = "";
-    private static final String a3= "";
-    private static final String a4 = "";
+    private static final String a = "";
+    private static final String a2 = "pgGtqOfpaP3YVTm4WlJUytaz28sQGyC0TKrmMB6+WG1IinsGJ1S3FUx8EHmguGXyTCxg/eLuSLmTNZdN9QaAUGNcQ7J+Y5fFzUk0P6y629g";
+    private static final String a3= "P7gBe4iIMsIav91Vs/Gs+uIsR0iU9pAzGFeewkO3BkbmbXGH5WHDDrJTrEMYpMbG3kVm/OZKlcZZqenZ9F0CMxSASgElOFbShbBE6653WQE4SVs1663A6Skewmk3r6BwOrhtck6TMG793UxikT1bmooVkj+uYD+K21piXvlEjjAGD7Xb0lD1Adr6lPXommJD7+Po1rvMRJIxX0GoatAIQ9fx6jccswiWNweUYbd3jl3SWP+ZFOfydkscUzDnR17AGMBNX7qCD7rviWZhlUeuCeKWy6CpKeTsbO1/JT2OrZRW7B3LzZ+qGf1+Qfk8LAwreEw+0RilSJGY+0N524X2HZyDE3gBnkL25Nmm2sCgi/t2HaO0cfr1EaJNjAIGxyhNtIwSTkG7eEJo1oheOlTxgzjRpx6kx+OLThw0BLn/IzE9PT0y0GIHEf4JTwTa4eSs";
+    private static final String a4 = "TST/HdZGy0oi11sfphgF9one/YJjy0karpsbnAJMgSQpIh1mXTZzxD/UYkgG6DhzDVaxA+++LxLXnd/4guUHkRkF8nEpklPBuCjfy5fxaVHFE4zbpK5yYScN3AkJrgBaMnOjUzjoErjRz4Y3k7bBkN0QQc+JdG8Cr+KvseE+vbE1Op5sl/r0Yg6AiUyWlTuAofQGS4M7lwMCjSxiUNfOTf5KjvbsTV7mbpAmqIvGPuu3JdC0poRH+MExFeCv8rlgNA+YT+O/wlBRwgLoPkpOWwp1UrtH5avCMu7WoKe3Es+46hjWaCqteM0JxPWN+r6cxey/pFHBMmPWMFu+jnUVufqeXQyHrOs6TsM1P33LKOVRy5zMKt+CB+rWzNJ4FO8EWHqMJqRzbgWyr1tE9gj8vLlNq2+Iftkk4tnPcHIADpffqkWR0axFy1aMvtB0JjPnt7nJZkcUwpUtdljITadfkaWgA7fEkcTRrmseBsVVxIkXx9R3vJKwt6rt9CDbO3O7hjerl3AyAA8dudWGX4eHOQ6DJIGAKTsbEuxcV4Ebo1BIKzPB9B0V3xsvKAOMz7pYr+LmPRAoB70OKFx1lpatRdPUmEJhRnhd1KioK2Gw43+1JpZyk3059X28XciiC53O";
     
     private static final String a5 = "";
     private static final String a6 = "";
