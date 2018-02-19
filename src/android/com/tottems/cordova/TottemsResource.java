@@ -20,9 +20,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
-public class DecryptResource extends CordovaPlugin {
+public class TottemsResource extends CordovaPlugin {
 
-    private static final String TAG = "DecryptResource";
+    private static final String TAG = "TottemsResource";
 
     private static final String a = "";
     private static final String a5 = "";
