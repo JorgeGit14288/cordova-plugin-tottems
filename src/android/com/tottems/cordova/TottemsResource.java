@@ -1,4 +1,4 @@
-package com.tkyaji.cordova;
+package com.tottems.cordova;
 
 import android.net.Uri;
 import android.util.Base64;

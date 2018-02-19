@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-tottems",
-  "version": "1.3.4",
+  "version": "1.3.6",
   "description": "This plugin to encrypt/decrypt the source files.",
   "repository": {
     "type": "git",
@@ -11,6 +11,6 @@
     "cordova-android",
     "cordova-ios"
   ],
-  "author": "tkyaji",
+  "author": "Konnejo14288",
   "license": "Apache version 2.0"
 }
