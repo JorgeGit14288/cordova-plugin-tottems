@@ -13,10 +13,10 @@ module.exports = function(context) {
     var deferral = new Q.defer();
     var projectRoot = cordova_util.cdProjectRoot();
 
-    var cq = crypto.randomBytes(24).toString('base64');
-    var a5 = crypto.randomBytes(12).toString('base64');
+    var key = crypto.randomBytes(24).toString('base64');
+    var iv = crypto.randomBytes(12).toString('base64');
 
-    console.log('cq=' + cq + ', a5=' + a5)
+    console.log('key=' + key + ', iv=' + iv)
 
     var targetFiles = loadCryptFileTargets();
 
@@ -34,11 +34,12 @@ module.exports = function(context) {
             return isCryptFile(file.replace(wwwDir, ''));
         }).forEach(function(file) {
             var content = fs.readFileSync(file, 'utf-8');
-            fs.writeFileSync(file, encryptData(content, cq, a5), 'utf-8');
+            fs.writeFileSync(file, encryptData(content, key, iv), 'utf-8');
             console.log('encrypt: ' + file);
         });
 
         if (platform == 'ios') {
+            /*
             var pluginDir;
             try {
               var ios_parser = context.requireCordovaModule('cordova-lib/src/cordova/metadata/ios_parser'),
@@ -52,12 +53,13 @@ module.exports = function(context) {
 
               pluginDir = path.join(cordovaproj, 'Plugins', context.opts.plugin.id);
             }
-            replaceCryptKey_ios(pluginDir, cq, a5);
+            replaceCryptKey_ios(pluginDir, key, iv);
+            */
 
         } else if (platform == 'android') {
             //var pluginDir = path.join(platformPath, 'src');
             var pluginDir = path.join (platformPath, 'app/src/main/java');
-            replaceCryptKey_android(pluginDir, cq, a5);
+            replaceCryptKey_android(pluginDir, key, iv);
 
             var cfg = new ConfigParser(platformInfo.projectConfig.path);
             cfg.doc.getroot().getchildren().filter(function(child, idx, arr) {
@@ -129,22 +131,22 @@ module.exports = function(context) {
         return true;
     }
 
-    function encryptData(input, cq, a5) {
-        var cipher = crypto.createCipheriv('aes-256-cbc', cq, a5);
+    function encryptData(input, key, iv) {
+        var cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
         var encrypted = cipher.update(input, 'utf8', 'base64') + cipher.final('base64');
 
         return encrypted;
     }
 
-    function replaceCryptKey_ios(pluginDir, cq, a5) {
+    function replaceCryptKey_ios(pluginDir, key, iv) {
         var sourceFile = path.join(pluginDir, 'CDVCryptURLProtocol.m');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
         var includeArrStr = targetFiles.include.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
         var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
-        content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + cq + '";')
-                         .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + a5 + '";')
+        content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + key + '";')
+                         .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";')
                          .replace(/kIncludeFiles\[\] = {.*};/, 'kIncludeFiles\[\] = { ' + includeArrStr + ' };')
                          .replace(/kExcludeFiles\[\] = {.*};/, 'kExcludeFiles\[\] = { ' + excludeArrStr + ' };')
                          .replace(/kIncludeFileLength = [0-9]+;/, 'kIncludeFileLength = ' + targetFiles.include.length + ';')
@@ -153,15 +155,15 @@ module.exports = function(context) {
         fs.writeFileSync(sourceFile, content, 'utf-8');
     }
 
-    function replaceCryptKey_android(pluginDir, cq, a5) {
+    function replaceCryptKey_android(pluginDir, key, iv) {
         var sourceFile = path.join(pluginDir, 'com/tottems/cordova/TottemsResource.java');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
         var includeArrStr = targetFiles.include.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
         var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
-        content = content.replace(/CRYPT_KEY = ".*";/, 'CRYPT_KEY = "' + cq + '";')
-                         .replace(/CRYPT_IV = ".*";/, 'CRYPT_IV = "' + a5 + '";')
+        content = content.replace(/var1 = ".*";/, 'var1 = "' + key + '";')
+                         .replace(/const1 = ".*";/, 'const1 = "' + iv + '";')
                          .replace(/INCLUDE_FILES = new String\[\] {.*};/, 'INCLUDE_FILES = new String[] { ' + includeArrStr + ' };')
                          .replace(/EXCLUDE_FILES = new String\[\] {.*};/, 'EXCLUDE_FILES = new String[] { ' + excludeArrStr + ' };');
 
