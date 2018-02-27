@@ -1,17 +1,16 @@
-# Cordova crypt file plugin
+# Cordova Tottems File
 HTML source file is encrypted at build, and decrypted at run.  
 https://www.npmjs.com/package/cordova-plugin-tottems
 
 ## Add Plugin
 `cordova plugin add cordova-plugin-tottems`
 
-## Encrypt
-`cordova build [ios / android]`
+## Remove Plugin
+`cordova plugin rm cordova-plugin-tottems`
 
-## Decrypt
-`cordova emulate [ios / android]`  
-or  
-`cordova run [ios / android]`  
+## Encrypt
+`cordova build [android]`
+
 
 
 ### Edit subjects
