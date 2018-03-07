@@ -209,7 +209,7 @@ wSgsqi 6
     }
 
    function jg(o1_, o2_, o3_){
-        return o1_.substring(0, 9)+o2_.substring(9, 21)+o3_.substring(21);
+        return o1_.substring(0, 9)+o2_.substring(10, 21)+o3_.substring(21);
     }
     
   function gh(f1_, f2_, f3_){

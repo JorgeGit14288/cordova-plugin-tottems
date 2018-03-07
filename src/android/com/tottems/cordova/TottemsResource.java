@@ -63,11 +63,10 @@ public class TottemsResource extends CordovaPlugin {
         ByteArrayInputStream byteInputStream = null;
         try {
             
-
             //utf8 = asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)
-            SecretKey sy = new SecretKeySpec(jg().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)), ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6));
+            SecretKey sy = new SecretKeySpec(var1.getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)), ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6));
             Cipher h = Cipher.getInstance(ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6)+"/CBC/PKCS5Padding");
-            h.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(gh().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23))));
+            h.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(const1.getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23))));
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bos.write(h.doFinal(p));
@@ -80,7 +79,7 @@ public class TottemsResource extends CordovaPlugin {
     }
 
 private String jg (){
-    return o1_.substring(0, 9)+o2_.substring(9, 21)+o3_.substring(21);
+    return o1_.substring(0, 9)+o2_.substring(10, 21)+o3_.substring(21);
 }
 
 private String gh (){
