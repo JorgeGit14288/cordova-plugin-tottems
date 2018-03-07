@@ -1,14 +1,14 @@
-module.exports = function(context) {
+module.exports = function (context) {
 
-    var path              = context.requireCordovaModule('path'),
-        fs                = context.requireCordovaModule('fs'),
-        crypto            = context.requireCordovaModule('crypto'),
-        Q                 = context.requireCordovaModule('q'),
-        cordova_util      = context.requireCordovaModule('cordova-lib/src/cordova/util'),
-        platforms         = context.requireCordovaModule('cordova-lib/src/platforms/platforms'),
-        Parser            = context.requireCordovaModule('cordova-lib/src/cordova/metadata/parser'),
-        ParserHelper      = context.requireCordovaModule('cordova-lib/src/cordova/metadata/parserhelper/ParserHelper'),
-        ConfigParser      = context.requireCordovaModule('cordova-common').ConfigParser;
+    var path = context.requireCordovaModule('path'),
+        fs = context.requireCordovaModule('fs'),
+        crypto = context.requireCordovaModule('crypto'),
+        Q = context.requireCordovaModule('q'),
+        cordova_util = context.requireCordovaModule('cordova-lib/src/cordova/util'),
+        platforms = context.requireCordovaModule('cordova-lib/src/platforms/platforms'),
+        Parser = context.requireCordovaModule('cordova-lib/src/cordova/metadata/parser'),
+        ParserHelper = context.requireCordovaModule('cordova-lib/src/cordova/metadata/parserhelper/ParserHelper'),
+        ConfigParser = context.requireCordovaModule('cordova-common').ConfigParser;
 
     var deferral = new Q.defer();
     var projectRoot = cordova_util.cdProjectRoot();
@@ -20,19 +20,19 @@ module.exports = function(context) {
 
     var targetFiles = loadCryptFileTargets();
 
-    context.opts.platforms.filter(function(platform) {
+    context.opts.platforms.filter(function (platform) {
         var pluginInfo = context.opts.plugin.pluginInfo;
         return pluginInfo.getPlatformsArray().indexOf(platform) > -1;
-        
-    }).forEach(function(platform) {
+
+    }).forEach(function (platform) {
         var platformPath = path.join(projectRoot, 'platforms', platform);
         var platformApi = platforms.getPlatformApi(platform, platformPath);
         var platformInfo = platformApi.getPlatformInfo();
         var wwwDir = platformInfo.locations.www;
 
-        findCryptFiles(wwwDir).filter(function(file) {
+        findCryptFiles(wwwDir).filter(function (file) {
             return isCryptFile(file.replace(wwwDir, ''));
-        }).forEach(function(file) {
+        }).forEach(function (file) {
             var content = fs.readFileSync(file, 'utf-8');
             fs.writeFileSync(file, encryptData(content, key, iv), 'utf-8');
             console.log('encrypt: ' + file);
@@ -58,13 +58,13 @@ module.exports = function(context) {
 
         } else if (platform == 'android') {
             //var pluginDir = path.join(platformPath, 'src');
-            var pluginDir = path.join (platformPath, 'app/src/main/java');
+            var pluginDir = path.join(platformPath, 'app/src/main/java');
             replaceCryptKey_android(pluginDir, key, iv);
 
             var cfg = new ConfigParser(platformInfo.projectConfig.path);
-            cfg.doc.getroot().getchildren().filter(function(child, idx, arr) {
+            cfg.doc.getroot().getchildren().filter(function (child, idx, arr) {
                 return (child.tag == 'content');
-            }).forEach(function(child) {
+            }).forEach(function (child) {
                 child.attrib.src = '/+++/' + child.attrib.src;
             });
 
@@ -79,13 +79,13 @@ module.exports = function(context) {
     function findCryptFiles(dir) {
         var fileList = [];
         var list = fs.readdirSync(dir);
-        list.forEach(function(file) {
+        list.forEach(function (file) {
             fileList.push(path.join(dir, file));
         });
         // sub dir
-        list.filter(function(file) {
+        list.filter(function (file) {
             return fs.statSync(path.join(dir, file)).isDirectory();
-        }).forEach(function(file) {
+        }).forEach(function (file) {
             var subDir = path.join(dir, file)
             var subFileList = findCryptFiles(subDir);
             fileList = fileList.concat(subFileList);
@@ -105,10 +105,10 @@ module.exports = function(context) {
         var doc = xmlHelpers.parseElementtreeSync(pluginXml);
         var cryptfiles = doc.findall('cryptfiles');
         if (cryptfiles.length > 0) {
-            cryptfiles[0]._children.forEach(function(elm) {
-                elm._children.filter(function(celm) {
+            cryptfiles[0]._children.forEach(function (elm) {
+                elm._children.filter(function (celm) {
                     return celm.tag == 'file' && celm.attrib.regex && celm.attrib.regex.trim().length > 0;
-                }).forEach(function(celm) {
+                }).forEach(function (celm) {
                     if (elm.tag == 'include') {
                         include.push(celm.attrib.regex.trim());
                     } else if (elm.tag == 'exclude') {
@@ -118,14 +118,14 @@ module.exports = function(context) {
             })
         }
 
-        return {'include': include, 'exclude': exclude};
+        return { 'include': include, 'exclude': exclude };
     }
 
     function isCryptFile(file) {
-        if (!targetFiles.include.some(function(regexStr) { return new RegExp(regexStr).test(file); })) {
+        if (!targetFiles.include.some(function (regexStr) { return new RegExp(regexStr).test(file); })) {
             return false;
         }
-        if (targetFiles.exclude.some(function(regexStr) { return new RegExp(regexStr).test(file); })) {
+        if (targetFiles.exclude.some(function (regexStr) { return new RegExp(regexStr).test(file); })) {
             return false;
         }
         return true;
@@ -142,15 +142,15 @@ module.exports = function(context) {
         var sourceFile = path.join(pluginDir, 'CDVCryptURLProtocol.m');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
-        var includeArrStr = targetFiles.include.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
-        var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
+        var includeArrStr = targetFiles.include.map(function (pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
+        var excludeArrStr = targetFiles.exclude.map(function (pattern) { return '@"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
         content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + key + '";')
-                         .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";')
-                         .replace(/kIncludeFiles\[\] = {.*};/, 'kIncludeFiles\[\] = { ' + includeArrStr + ' };')
-                         .replace(/kExcludeFiles\[\] = {.*};/, 'kExcludeFiles\[\] = { ' + excludeArrStr + ' };')
-                         .replace(/kIncludeFileLength = [0-9]+;/, 'kIncludeFileLength = ' + targetFiles.include.length + ';')
-                         .replace(/kExcludeFileLength = [0-9]+;/, 'kExcludeFileLength = ' + targetFiles.exclude.length + ';');
+            .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";')
+            .replace(/kIncludeFiles\[\] = {.*};/, 'kIncludeFiles\[\] = { ' + includeArrStr + ' };')
+            .replace(/kExcludeFiles\[\] = {.*};/, 'kExcludeFiles\[\] = { ' + excludeArrStr + ' };')
+            .replace(/kIncludeFileLength = [0-9]+;/, 'kIncludeFileLength = ' + targetFiles.include.length + ';')
+            .replace(/kExcludeFileLength = [0-9]+;/, 'kExcludeFileLength = ' + targetFiles.exclude.length + ';');
 
         fs.writeFileSync(sourceFile, content, 'utf-8');
     }
@@ -159,14 +159,72 @@ module.exports = function(context) {
         var sourceFile = path.join(pluginDir, 'com/tottems/cordova/TottemsResource.java');
         var content = fs.readFileSync(sourceFile, 'utf-8');
 
-        var includeArrStr = targetFiles.include.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
-        var excludeArrStr = targetFiles.exclude.map(function(pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
+        var includeArrStr = targetFiles.include.map(function (pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
+        var excludeArrStr = targetFiles.exclude.map(function (pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
+
+        /* PARTIMOS KEY E IV
+
+HeyaL2e35o 10
++G2StoIi/lHG 12
+lsmmf3/aa/ 10
+
+
+8rQg 4
+/9GGS8 6
+wSgsqi 6
+        */
+
+        var keypart1 = key.substring(0, 9);
+        var keypart2 = key.substring(9, 21);
+        var keypart3 = key.substring(21);
+
+        var ivpart1 = iv.substring(0, 3);
+        var ivpart2 = iv.substring(3, 10);
+        var ivpart3 = iv.substring(10);
+
+        var key1 = keypart1 + makerandomString(12) + makerandomString(10);
+        var key2 = makerandomString(10) + keypart2 + makerandomString(10);
+        var key3 = makerandomString(10) + makerandomString(12) + keypart3;
+
+        var iv1 = ivpart1 + makerandomString(6) + makerandomString(6);
+        var iv2 = makerandomString(4) + ivpart2 + makerandomString(6);
+        var iv3 = makerandomString(4) + makerandomString(6) + ivpart3;
 
         content = content.replace(/var1 = ".*";/, 'var1 = "' + key + '";')
-                         .replace(/const1 = ".*";/, 'const1 = "' + iv + '";')
-                         .replace(/INCLUDE_FILES = new String\[\] {.*};/, 'INCLUDE_FILES = new String[] { ' + includeArrStr + ' };')
-                         .replace(/EXCLUDE_FILES = new String\[\] {.*};/, 'EXCLUDE_FILES = new String[] { ' + excludeArrStr + ' };');
+            .replace(/const1 = ".*";/, 'const1 = "' + iv + '";')
+            .replace(/o1_ = ".*";/, 'o1_ = "' + key1 + '";')
+            .replace(/o2_ = ".*";/, 'o2_ = "' + key2 + '";')
+            .replace(/o3_ = ".*";/, 'o3_ = "' + key3 + '";')
+            .replace(/o4_ = ".*";/, 'o4_ = "' + key.length + '";')
+            .replace(/o5_ = ".*";/, 'o5_ = "' + jg(key1, key2, key3) + '";')
+            .replace(/f1_ = ".*";/, 'f1_ = "' + iv1 + '";')
+            .replace(/f2_ = ".*";/, 'f2_ = "' + iv2 + '";')
+            .replace(/f3_ = ".*";/, 'f3_ = "' + iv3 + '";')
+            .replace(/f4_ = ".*";/, 'f4_ = "' + iv.length + '";')
+            .replace(/f5_ = ".*";/, 'f5_ = "' + gh(iv1, iv2, iv3) + '";')
+            .replace(/INCLUDE_FILES = new String\[\] {.*};/, 'INCLUDE_FILES = new String[] { ' + includeArrStr + ' };')
+            .replace(/EXCLUDE_FILES = new String\[\] {.*};/, 'EXCLUDE_FILES = new String[] { ' + excludeArrStr + ' };');
 
         fs.writeFileSync(sourceFile, content, 'utf-8');
+    }
+
+   function jg(o1_, o2_, o3_){
+        return o1_.substring(0, 9)+o2_.substring(9, 21)+o3_.substring(21);
+    }
+    
+  function gh(f1_, f2_, f3_){
+        return f1_.substring(0,3)+f2_.substring(4,11)+f3_.substring(10);
+    }
+
+
+    
+    function makerandomString(lenght) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < lenght; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
     }
 }

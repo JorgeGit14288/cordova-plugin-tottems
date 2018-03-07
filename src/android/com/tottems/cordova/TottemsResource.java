@@ -15,73 +15,89 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 public class TottemsResource extends CordovaPlugin {
-    private static final String TAG = "TottemsResource";
-    private static final String bar2 = "4fd90e3567e37add69fe8f20891e63a24fd90e3567e37add69fe8f20891e63a24fd90e3567e37add69fe8f20891e63a2";
-    private static final String bar3 = "avBfb5kkZsmzC2IWy/8BcWaVdFjUPvBD00vmfRGyk+U0VtgBacUdy7DbQKVEVaV0qS/hrNQTgM1HoNdvBFVhIA== ";
-    private static final String nativek = "EoENktcdw6vzFa1kP75cGr9u8ooYKDfz/29a0";
-    private static final String nativek2 = "EoEdsaw12Nktcdw6vzFa1kP75cGr9u8ooYKDfz";
-    private static final String nativek3 = "EoENds32133111300dssdaktcdw6vzFa1kP75cGr9u8ooYKDfzd";
-    private static final String nativek4 = "ee2dEoEdsaDSAANktcdw6vzFa1kP75cGr9u8oo";
-    private static final String caseor2 = "fd90e3567e37add69fe8f20891e63a24fd90e3567e37";
-    private static final String var1 = "";
+    private String asfhlasjdfjaldfja = "asdlkSPOQKJFLKASU-"; //U asfhlasjdfjaldfja.substring(16,17)
+                                                             //-    asfhlasjdfjaldfja.substring(17,18)
+    private static final String TAG = "TottemsResource", bar2 = "4fd90e3567e37add69fe8f20891e63a24fd90e3567e37add69fe8f20891e63a24fd90e3567e37add69fe8f20891e63a2", bar3 = "avBfb5kkZsmzC2IWy/8BcWaVdFjUPvBD00vmfRGyk+U0VtgBacUdy7DbQKVEVaV0qS/hrNQTgM1HoNdvBFVhIA== ",nativek = "EoENktcdw6vzFa1kP75cGr9u8ooYKDfz/29a0",nativek2 = "EoEdsaw12Nktcdw6vzFa1kP75cGr9u8ooYKDfz",nativek3 = "EoENds32133111300dssdaktcdw6vzFa1kP75cGr9u8ooYKDfzd",nativek4 = "ee2dEoEdsaDSAANktcdw6vzFa1kP75cGr9u8oo",caseor2 = "fd90e3567e37add69fe8f20891e63a24fd90e3567e37",var1 = "",vcaseor2 = " 3029394848029393923883OeLk7WJuBJh5OMZVW8hHpGilqG/gFiy0DyzpLjNN0Y2S0piCc/3923900",kcaseor = " sA6+aZDpWW9jWPnaFnqjqhOeLk7WJuBJh5OMZVW8hHpGilqG/gFiy0DyzpLjNN0Y2S0piCc/hec5GjN",dcaseor = "ac2a724c8b73c8452455d8c7a220a9a6",caseor = "A3321od9j3??/kekwli39kdjkwjlwefejfiewjfjf32jiwejeiiwieiejr329rifhjdskiewiueuuehuwihewioqieiehhe";
     private static final String const1 = "";
-    private static final String vcaseor2 = " 3029394848029393923883OeLk7WJuBJh5OMZVW8hHpGilqG/gFiy0DyzpLjNN0Y2S0piCc/3923900";
-    private static final String kcaseor = " sA6+aZDpWW9jWPnaFnqjqhOeLk7WJuBJh5OMZVW8hHpGilqG/gFiy0DyzpLjNN0Y2S0piCc/hec5GjN";
-    private static final String dcaseor = "ac2a724c8b73c8452455d8c7a220a9a6";
-    private static final String caseor = "A3321od9j3??/kekwli39kdjkwjlwefejfiewjfjf32jiwejeiiwieiejr329rifhjdskiewiueuuehuwihewioqieiehhe";
     private static final String[] INCLUDE_FILES = new String[] { };
     private static final String[] EXCLUDE_FILES = new String[] { };
+
+    private static final String o1_ = "";
+    private static final String o2_ = "";
+    private static final String o3_ = "";
+    private static final String o4_ = "";
+    private static final String o5_ = "";
+    
+
+    private static final String f1_ = "";
+    private static final String f2_ = "";
+    private static final String f3_ = "";
+    private static final String f4_ = "";
+    private static final String f5_ = "";
+
+
     @Override
-    public Uri remapUri(Uri uri) {
-        if (uri.toString().indexOf("/+++/") > -1) {
-            return this.toPluginUri(uri);
-        } else {
-            return uri;
-        }
+    public Uri remapUri(Uri u) {
+        if (u.toString().indexOf("/+++/") > -1) {return this.toPluginUri(u);} else {return u;}
     }
     @Override
-    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri uri) throws IOException {
-        Uri oriUri = this.fromPluginUri(uri);
-        String uriStr = oriUri.toString().replace("/+++/", "/").split("\\?")[0];
-        CordovaResourceApi.OpenForReadResult readResult =  this.webView.getResourceApi().openForRead(Uri.parse(uriStr), true);
-        if (!isCryptFiles(uriStr)) {
-            return readResult;
+    public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri u) throws IOException {
+        String basdfasdfhjadflajdhfladf = "wkSAWWEoQdElikdjADEaF98"; //F basdfasdfhjadflajdhfladf.substring(20,21),
+                                                                      //8  basdfasdfhjadflajdhfladf.substring(22,23)
+        Uri a = this.fromPluginUri(u);
+        String b = a.toString().replace("/+++/", "/").split("\\?")[0];
+        CordovaResourceApi.OpenForReadResult r =  this.webView.getResourceApi().openForRead(Uri.parse(b), true);
+        if (!mjolnir(b)) {
+            return r;
         }
-        BufferedReader br = new BufferedReader(new InputStreamReader(readResult.inputStream));
+        String ac2a724c8b73c8452455d8c7a220a9a6 = "aASASDAtAiekdjfurhtl6T-"; // T ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)
+        BufferedReader br = new BufferedReader(new InputStreamReader(r.inputStream));
         StringBuilder strb = new StringBuilder();
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            strb.append(line);
+        String n = null;
+        while ((n = br.readLine()) != null) {
+            strb.append(n);
         }
         br.close();
-        byte[] bytes = Base64.decode(strb.toString(), Base64.DEFAULT);
-        LOG.d(TAG, "decrypt: " + uriStr);
+        byte[] p = Base64.decode(strb.toString(), Base64.DEFAULT);
+        LOG.d(TAG, "decrypt: " + b);
         ByteArrayInputStream byteInputStream = null;
         try {
-            SecretKey sy = new SecretKeySpec(var1.getBytes("UTF-8"), "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(const1.getBytes("UTF-8")));
+            
+
+            //utf8 = asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)
+            SecretKey sy = new SecretKeySpec(jg().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)), ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6));
+            Cipher h = Cipher.getInstance(ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6)+"/CBC/PKCS5Padding");
+            h.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(gh().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23))));
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bos.write(cipher.doFinal(bytes));
+            bos.write(h.doFinal(p));
             byteInputStream = new ByteArrayInputStream(bos.toByteArray());
         } catch (Exception ex) {
             LOG.e(TAG, ex.getMessage());
         }
         return new CordovaResourceApi.OpenForReadResult(
-                readResult.uri, byteInputStream, readResult.mimeType, readResult.length, readResult.assetFd);
+                r.uri, byteInputStream, r.mimeType, r.length, r.assetFd);
     }
-    private boolean isCryptFiles(String uri) {
-        String checkPath = uri.replace("file:///android_asset/www/", "");
-        if (!this.hasMatch(checkPath, INCLUDE_FILES)) {
+
+private String jg (){
+    return o1_.substring(0, 9)+o2_.substring(9, 21)+o3_.substring(21);
+}
+
+private String gh (){
+    return f1_.substring(0,3)+f2_.substring(4,11)+f3_.substring(10);
+}
+
+    private boolean mjolnir(String u) {
+        String c = u.replace("file:///android_asset/www/", "");
+        if (!this.batman(c, INCLUDE_FILES)) {
             return false;
         }
-        if (this.hasMatch(checkPath, EXCLUDE_FILES)) {
+        if (this.batman(c, EXCLUDE_FILES)) {
             return false;
         }
         return true;
     }
-    private boolean hasMatch(String text, String[] regexArr) {
+    private boolean batman(String text, String[] regexArr) {
         for (String regex : regexArr) {
             if (Pattern.compile(regex).matcher(text).find()) {
                 return true;
