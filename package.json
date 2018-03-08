@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-tottems",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "This plugin to encrypt/decrypt the source files.",
   "repository": {
     "type": "git",

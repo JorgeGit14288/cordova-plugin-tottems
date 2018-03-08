@@ -181,21 +181,15 @@ module.exports = function (context) {
         var iv2 = makerandomString(4) + ivpart2 + makerandomString(6);
         var iv3 = makerandomString(4) + makerandomString(6) + ivpart3;
 
-        console.log("Kye partido ",jg(key1, key2, key3) );
-        console.log("Iv Partido ",  gh(iv1, iv2, iv3));
+        //console.log("Kye partido ",jg(key1, key2, key3) );
+        //console.log("Iv Partido ",  gh(iv1, iv2, iv3));
 
-        content = content.replace(/var1 = ".*";/, 'var1 = "' + key + '";')
-            .replace(/const1 = ".*";/, 'const1 = "' + iv + '";')
-            .replace(/o1_ = ".*";/, 'o1_ = "' + key1 + '";')
+        content = content.replace(/o1_ = ".*";/, 'o1_ = "' + key1 + '";')
             .replace(/o2_ = ".*";/, 'o2_ = "' + key2 + '";')
             .replace(/o3_ = ".*";/, 'o3_ = "' + key3 + '";')
-            .replace(/o4_ = ".*";/, 'o4_ = "' + key.length + '";')
-            .replace(/o5_ = ".*";/, 'o5_ = "' + jg(key1, key2, key3) + '";')
             .replace(/f1_ = ".*";/, 'f1_ = "' + iv1 + '";')
             .replace(/f2_ = ".*";/, 'f2_ = "' + iv2 + '";')
             .replace(/f3_ = ".*";/, 'f3_ = "' + iv3 + '";')
-            .replace(/f4_ = ".*";/, 'f4_ = "' + iv.length + '";')
-            .replace(/f5_ = ".*";/, 'f5_ = "' + gh(iv1, iv2, iv3) + '";')
             .replace(/INCLUDE_FILES = new String\[\] {.*};/, 'INCLUDE_FILES = new String[] { ' + includeArrStr + ' };')
             .replace(/EXCLUDE_FILES = new String\[\] {.*};/, 'EXCLUDE_FILES = new String[] { ' + excludeArrStr + ' };');
 
