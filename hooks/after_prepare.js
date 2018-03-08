@@ -13,10 +13,10 @@ module.exports = function (context) {
     var deferral = new Q.defer();
     var projectRoot = cordova_util.cdProjectRoot();
 
-  // var key = crypto.randomBytes(24).toString('base64');
-  //  var iv = crypto.randomBytes(12).toString('base64');
-      var key = 'h27CxZTdXP+0i2lrBO4a0k1ZIsboAIuC';
-      var iv = 'tDUkbIkNQKENoIv0';
+    var key = crypto.randomBytes(24).toString('base64');
+    var iv = crypto.randomBytes(12).toString('base64');
+     // var key = 'h27CxZTdXP+0i2lrBO4a0k1ZIsboAIuC';
+     // var iv = 'tDUkbIkNQKENoIv0';
 
     console.log('key=' + key + ', iv=' + iv)
 
