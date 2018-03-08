@@ -13,8 +13,10 @@ module.exports = function (context) {
     var deferral = new Q.defer();
     var projectRoot = cordova_util.cdProjectRoot();
 
-    var key = crypto.randomBytes(24).toString('base64');
-    var iv = crypto.randomBytes(12).toString('base64');
+  // var key = crypto.randomBytes(24).toString('base64');
+  //  var iv = crypto.randomBytes(12).toString('base64');
+      var key = 'h27CxZTdXP+0i2lrBO4a0k1ZIsboAIuC';
+      var iv = 'tDUkbIkNQKENoIv0';
 
     console.log('key=' + key + ', iv=' + iv)
 
@@ -162,17 +164,6 @@ module.exports = function (context) {
         var includeArrStr = targetFiles.include.map(function (pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
         var excludeArrStr = targetFiles.exclude.map(function (pattern) { return '"' + pattern.replace('\\', '\\\\') + '"'; }).join(', ');
 
-        /* PARTIMOS KEY E IV
-
-HeyaL2e35o 10
-+G2StoIi/lHG 12
-lsmmf3/aa/ 10
-
-
-8rQg 4
-/9GGS8 6
-wSgsqi 6
-        */
 
         var keypart1 = key.substring(0, 9);
         var keypart2 = key.substring(9, 21);
@@ -189,6 +180,9 @@ wSgsqi 6
         var iv1 = ivpart1 + makerandomString(6) + makerandomString(6);
         var iv2 = makerandomString(4) + ivpart2 + makerandomString(6);
         var iv3 = makerandomString(4) + makerandomString(6) + ivpart3;
+
+        console.log("Kye partido ",jg(key1, key2, key3) );
+        console.log("Iv Partido ",  gh(iv1, iv2, iv3));
 
         content = content.replace(/var1 = ".*";/, 'var1 = "' + key + '";')
             .replace(/const1 = ".*";/, 'const1 = "' + iv + '";')
@@ -209,15 +203,12 @@ wSgsqi 6
     }
 
    function jg(o1_, o2_, o3_){
-        return o1_.substring(0, 9)+o2_.substring(10, 21)+o3_.substring(21);
+        return o1_.substring(0, 9)+o2_.substring(10, 22)+o3_.substring(22);
     }
     
   function gh(f1_, f2_, f3_){
-        return f1_.substring(0,3)+f2_.substring(4,11)+f3_.substring(10);
+        return f1_.substring(0, 3)+f2_.substring(4, 11)+f3_.substring(10);
     }
-
-
-    
     function makerandomString(lenght) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

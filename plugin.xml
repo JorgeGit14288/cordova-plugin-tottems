@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
   id="cordova-plugin-tottems"
-  version="1.8.0">
+  version="2.0.0">
 
     <name>CordovaTottems</name>
     <description>Plugin Description</description>

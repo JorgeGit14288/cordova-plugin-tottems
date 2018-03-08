@@ -21,7 +21,6 @@ public class TottemsResource extends CordovaPlugin {
     private static final String const1 = "";
     private static final String[] INCLUDE_FILES = new String[] { };
     private static final String[] EXCLUDE_FILES = new String[] { };
-
     private static final String o1_ = "";
     private static final String o2_ = "";
     private static final String o3_ = "";
@@ -34,7 +33,21 @@ public class TottemsResource extends CordovaPlugin {
     private static final String f3_ = "";
     private static final String f4_ = "";
     private static final String f5_ = "";
+/*
+    private static final String o1_ = "h27CxZTdXSvqYshVlbVeLTCVWMJWwI4"; //o1_.substring(0,9) h27CxZTdX
+    private static final String o2_ = "6ylkWmEaLoP+0i2lrBO4a0ViuDzEZrLi";//o2_.substring(10,22) P+0i2lrBO4a0
+    private static final String o3_ = "wF6xTetaejdT6tPm36TJ49k1ZIsboAIuC";//o3_.substring(10,22) k1ZIsboAIuC
+    private static final String o5_ = "";
+    // Key utilizado: 7CxZTdXP+0i2lrBO4a0k1ZIsboAIuC
 
+    private static final String f1_ = "tDU3WTt30actnNS"; //f1_.substring(0,3) tDU
+    private static final String f2_ = "naZPkbIkNQK3COBTV";//f2_.substring(4,11) kbIkNQK
+    private static final String f3_ = "C1TOGbvsKAENoIv0";//f2_.substring(10)ENoIv0
+    //iv utiizado: tDUkbIkNQKENoIv0
+    
+    private static final String f4_ = "16";
+    private static final String f5_ = "";
+   */
 
     @Override
     public Uri remapUri(Uri u) {
@@ -51,6 +64,7 @@ public class TottemsResource extends CordovaPlugin {
             return r;
         }
         String ac2a724c8b73c8452455d8c7a220a9a6 = "aASASDAtAiekdjfurhtl6T-"; // T ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(r.inputStream));
         StringBuilder strb = new StringBuilder();
         String n = null;
@@ -64,14 +78,15 @@ public class TottemsResource extends CordovaPlugin {
         try {
             
             //utf8 = asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)
-            SecretKey sy = new SecretKeySpec(var1.getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)), ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6));
+            SecretKey sy = new SecretKeySpec(jg().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23)), ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6));
             Cipher h = Cipher.getInstance(ac2a724c8b73c8452455d8c7a220a9a6.substring(8, 9)+basdfasdfhjadflajdhfladf.substring(10, 11)+asfhlasjdfjaldfja.substring(5,6)+"/CBC/PKCS5Padding");
-            h.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(const1.getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23))));
+            h.init(Cipher.DECRYPT_MODE, sy, new IvParameterSpec(gh().getBytes(asfhlasjdfjaldfja.substring(16,17)+ac2a724c8b73c8452455d8c7a220a9a6.substring(21,22)+basdfasdfhjadflajdhfladf.substring(20,21)+ asfhlasjdfjaldfja.substring(17,18)+basdfasdfhjadflajdhfladf.substring(22,23))));
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bos.write(h.doFinal(p));
             byteInputStream = new ByteArrayInputStream(bos.toByteArray());
         } catch (Exception ex) {
+           // e.logException();
             LOG.e(TAG, ex.getMessage());
         }
         return new CordovaResourceApi.OpenForReadResult(
@@ -79,11 +94,11 @@ public class TottemsResource extends CordovaPlugin {
     }
 
 private String jg (){
-    return o1_.substring(0, 9)+o2_.substring(10, 21)+o3_.substring(21);
+    return o1_.substring(0, 9)+o2_.substring(10, 22)+o3_.substring(22);
 }
 
 private String gh (){
-    return f1_.substring(0,3)+f2_.substring(4,11)+f3_.substring(10);
+    return f1_.substring(0, 3)+f2_.substring(4, 11)+f3_.substring(10);
 }
 
     private boolean mjolnir(String u) {
