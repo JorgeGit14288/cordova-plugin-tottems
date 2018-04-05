@@ -8,12 +8,7 @@ https://www.npmjs.com/package/cordova-plugin-tottems
 ## Remove Plugin
 `cordova plugin rm cordova-plugin-tottems`
 
-## Encrypt
-`cordova build [android]`
 
-
-
-### Edit subjects
 
 You can specify the encryption subjects by editing `plugin.xml`.
 
@@ -30,10 +25,5 @@ You can specify the encryption subjects by editing `plugin.xml`.
 </cryptfiles>
 ```
 
-Specify the target file as a regular expression.
-
-
-## Supported platforms
-
-* Android
+#Create By Jorge Fuentes
 
